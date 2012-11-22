@@ -1,0 +1,28 @@
+server.c and client.c - implementation of go-back-n ARQ in C
+by Elijah Jordan Montgomery <elijah.montgomery@uky.edu>
+
+Server.c implements a reliable data transfer over UDP in C
+client.c implements a reliable data transfer client over UDP in C
+
+Both of these programs use the go-back-n ARQ, that is lost data is
+automatically resent. These programs are hardcoded to transfer
+8192 bytes of data in any chunksize from 1 to 512 bytes per packet
+
+to compile:
+
+gcc -o server server.c
+gcc -o client client.c
+
+to run:
+first run the server. Usage is:
+"./server <PORT> <CHUNKSIZE> [<LOSS RATE>]"
+for example: "./server 1655 500 .50" will start a server on port 1655,
+with chunk size of 500 bytes and 50% loss rate. Loss Rate is an optional
+argument and does not have to be used
+
+Once the server is running, run the client. Usage is:
+"./client <SERVER IP> <SERVER PORT> <CHUNK SIZE> <WINDOW SIZE>"
+so for example: "./client 10.10.10.5 1234 500 3" will instruct the client to
+connect to the server at 10.10.10.5 on port 1234 and send 3 chunks at a time
+of 500 bytes.
+
